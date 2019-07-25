@@ -9,3 +9,6 @@ def mydate(request, year, month, day):
 
 def myyear(request, year):
     return render(request,'myyear.html')
+
+def myyear_dict(request, year, month):
+    return render(request, 'myyear_dict.html', {'month':month})
