@@ -6,12 +6,7 @@ from .models import Product
 def index(request):
     type_list = Product.objects.values('type').distinct()
     name_list = Product.objects.values('name','type')
-    context = {
-        'title':'首页',
-        'type_list':type_list,
-        'name_list':name_list,
-    }
-    return render(request,'index.html',context=context,status=200)
+    return render(request,'index.html',context=locals(),status=200)
 
 def mydate(request, year, month, day):
     return HttpResponse(str(year) + '/' + str(month) + '/' + str(day))
