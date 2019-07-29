@@ -25,5 +25,26 @@ def download(request):
     return respone
 
 def login(request):
-    # 相对路径，代表首页地址
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        return redirect('/')
+    else:
+        if request.GET.get('name'):
+            name = request.GET.get('name')
+        else:
+            name = 'Everyone'
+        return HttpResponse('username is '+ name)
     return redirect('/')
+
+from django.views.generic import ListView
+class ProductList(ListView):
+    context_object_name = 'type_list'
+    template_name = 'index.html'
+    queryset = Product.objects.values('type').distinct()
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['name_list'] = Product.objects.values('name','type')
+        return context
+
+def test(request):
+    return render(request,'test.html')

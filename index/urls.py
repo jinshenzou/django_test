@@ -9,5 +9,7 @@ urlpatterns = [
     # 带参数name的URL
     re_path('(?P<year>[0-9]{4}).html', views.myyear, name='myyear'),
     path('download.html', views.download),
-    path('login.html', views.login)
+    path('login.html', views.login),
+    path('index/', views.ProductList.as_view()),
+    path('test/',views.test)
 ]
