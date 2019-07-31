@@ -1,11 +1,5 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{{ title }}</title>
-    </head>
-    <body>
-        <a href="{% url 'index' %}" target="_blank">首页</a>
-        <h1>Hello Django</h1>
-    </body>
-</html>
+{% extends "base.html" %}
+    {% block body %}
+    <a href="{% url 'index' %}" target="_blanck">首页</a>
+    <h1>Hello Django</h1>
+{% endblock %}

@@ -47,4 +47,4 @@ class ProductList(ListView):
         return context
 
 def test(request):
-    return render(request,'test.html')
+    return render(request,'test.html',{'title':'测试'})
