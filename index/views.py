@@ -48,3 +48,8 @@ class ProductList(ListView):
 
 def test(request):
     return render(request,'test.html',{'title':'测试'})
+
+from .form import *
+def index1(request):
+    product = ProductForm()
+    return render(request, 'data_form.html', locals())
