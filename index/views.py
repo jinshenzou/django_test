@@ -51,5 +51,54 @@ def test(request):
 
 from .form import *
 def index1(request):
-    product = ProductForm()
-    return render(request, 'data_form.html', locals())
+    # GET请求
+    if request.method == 'GET':
+        product = ProductForm()
+        return render(request,'data_form.html',locals())
+    # POST请求
+    else:
+        product = ProductForm(request.POST)
+        if product.is_valid():
+            # 获取网页控件name的数据
+            # 方法一
+            name = product['name']
+            # 方法二
+            cname = product.cleaned_data['name']
+            return HttpResponse(name+'提交成功')
+        else:
+            # 将错误信息输出
+            error_msg = product.errors.as_json()
+            print(error_msg)
+            return render(request, 'data_form.html', locals())
+
+def model_index(request, id):
+    if request.method == 'GET':
+        instance = Product.objects.filter(id=id)
+        # 判断数据是否存在
+        if instance:
+            product = ProductModelForm(instance=instance[0])
+        else:
+            product = ProductModelForm()
+        return render(request, 'data_form.html', locals())
+    else:
+        product = ProductModelForm(request.POST)
+        if product.is_valid():
+            # 获取weight的数据，并通过clean_weight进行清洗，转换成Python数据类型
+            weight = product.cleaned_data['weight']
+            # 数据保存方法一
+            # 直接将数据保存到数据库
+            product.save()
+            # 数据保存方法二
+            # save方法设置commit=False，将生成数据库对象product_db，然后对该对象属性值修改并保存
+            # product_db = product.save(commit=False)
+            # product_db.name = '我的iPhone'
+            # product_db.save()
+            # 数据保存方法三
+            # save_m2m()方法用于保存ManyToMant的数据模型
+            # product.save_m2m()
+            return HttpResponse('提交成功！weight清洗后的数据为：'+weight)
+        else:
+            # 将错误信息输出,error_msg是将错误信息以json格式输出
+            error_msg = product.errors.as_json()
+            print(error_msg)
+            return render(request, 'data_form.html', locals())
