@@ -12,7 +12,7 @@ def loginView(request):
     if request.method == 'POST':
         username = request.POST.get('username', '')
         password = request.POST.get('password', '')
-        if User.objects.filter(username=username,password=password):
+        if User.objects.filter(username=username):
             user = authenticate(username=username,password=password)
             if user:
                 if user.is_active:
