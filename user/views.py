@@ -17,9 +17,9 @@ def loginView(request):
             if user:
                 if user.is_active:
                     login(request, user)
-                    return redirect('/')
-                else:
-                    tips = '账号密码错误，请重新输入'
+                return redirect('/')
+            else:
+                tips = '账号密码错误，请重新输入'
         else:
             tips = '用户不存在，请注册'
     return render(request, 'user.html', locals())
