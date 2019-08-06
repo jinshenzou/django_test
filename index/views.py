@@ -1,11 +1,12 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
 import csv
-from .models import Product
+from .models import Product,Type
 # Create your views here.
 def index(request):
-    type_list = Product.objects.values('type').distinct()
-    name_list = Product.objects.values('name','type')
+    type_list = Product.objects.values('type__type').distinct()
+    name_list = Product.objects.values('name','type__type')
+    username = request.user.username
     return render(request,'index.html',context=locals(),status=200)
 
 def mydate(request, year, month, day):
@@ -33,7 +34,7 @@ def login(request):
             name = request.GET.get('name')
         else:
             name = 'Everyone'
-        return HttpResponse('username is '+ name)
+        return HttpResponse('username is '+name)
     return redirect('/')
 
 from django.views.generic import ListView
